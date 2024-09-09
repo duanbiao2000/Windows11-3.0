@@ -44,6 +44,7 @@ function Main() {
       vscode: false,
       recycle: false,
       app: false,
+      // !判断当前窗口是否不是windows数组中的窗口
       [window]: !windows[window],
     });
 
@@ -71,6 +72,8 @@ function Main() {
     }, 1000);
   }
 
+  // !使用useMemo来优化性能，避免在每次渲染时都重新计算images数组
+  // !只有当依赖项发生变化时（在这个例子中没有依赖项），才重新计算images数组
   const images = useMemo(
     () => [
       "/images/fun/1.gif",
@@ -94,9 +97,8 @@ function Main() {
     <>
       {isSleeping && (
         <div
-          className={`fixed top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 ease-in-out ${
-            fadeOut ? "opacity-0" : "opacity-100"
-          } z-50`}
+          className={`fixed top-0 left-0 w-full h-full bg-black transition-opacity duration-1000 ease-in-out ${fadeOut ? "opacity-0" : "opacity-100"
+            } z-50`}
           onClick={handleFadeOutClick}
         >
           {actionType === "sleep" && (
@@ -148,9 +150,8 @@ function Main() {
                     onDragStart={(e) => e.preventDefault()}
                   />
                   <div
-                    className={`text-balance text-center text-sm select-none ${
-                      app.name === "Recycle Bin" ? "pt-0" : "pt-2"
-                    }`}
+                    className={`text-balance text-center text-sm select-none ${app.name === "Recycle Bin" ? "pt-0" : "pt-2"
+                      }`}
                   >
                     {app.name}
                   </div>

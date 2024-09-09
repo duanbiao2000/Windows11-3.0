@@ -27,11 +27,21 @@ const SkillItem = ({ skillItem, isTechStack = false, iconSize = 15 }) => {
 };
 
 const ProjectCard = ({ repo }) => {
-  const renderSkills = () =>
-    repo.techUsed.map((tech, index) => {
-      const techSkill = skills.find((skill) => skill.name === tech);
-      return <SkillItem skillItem={techSkill} isTechStack={true} key={index} />;
-    });
+ /**
+ * 动态渲染技能项
+ * 
+ * 此函数通过映射技术栈中的每一项技术到相应的技能项组件，来动态地渲染出技能列表
+ * 它首先通过查找技能数组来获取每个技术对应的技能对象，然后为每个技能对象创建一个SkillItem组件
+ * 
+ * @returns {Array} 包含 SkillItem 组件的数组，每个组件代表一个技能
+ */
+const renderSkills = () =>
+  repo.techUsed.map((tech, index) => {
+    // 根据技术名称查找对应的技能对象
+    const techSkill = skills.find((skill) => skill.name === tech);
+    // 创建并返回 SkillItem 组件，传递技能对象和技术栈标识
+    return <SkillItem skillItem={techSkill} isTechStack={true} key={index} />;
+  });
 
   return (
     <div className="bg-neutral-900/80 rounded-md px-4 pt-3 hover:translate-x-1 hover:-translate-y-1 duration-300 text-selection">

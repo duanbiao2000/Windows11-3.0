@@ -16,7 +16,8 @@ function Login({ toggleLogin }) {
       setLoading(true);
       // Simulating a delay for demonstration purposes
       setTimeout(() => {
-        navigate(`/${name}`);
+       // 根据提供的名称进行页面导航
+navigate(`/${name}`);
         setLoading(false);
       }, 3000);
     } catch (err) {

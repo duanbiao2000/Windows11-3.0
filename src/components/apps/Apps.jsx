@@ -6,18 +6,27 @@ function Apps({ isAppOpen, toggleApp, bounds, input }) {
   const [commands, setCommands] = useState("");
   const [output, setOutput] = useState([]);
 
+  /**
+   * 处理输入事件的函数
+   * @param {KeyboardEvent} e - 键盘事件对象
+   */
   const handleInput = (e) => {
+    // 检查按键是否为Enter键
     if (e.key === "Enter") {
+      // 判断输入框内容是否为"cls"，如果是，则清空输出
       if (input.trim() === "cls") {
         setOutput([]);
       }
+      // 将当前输入添加到输出数组中，并重置输入框
       const newOutput = [...output, { commands, result: `Executed: ${input}` }];
       setOutput(newOutput);
       setCommands("");
     }
   };
 
+  // 当 isAppOpen 或 contentLoaded 的值变化时执行 useEffect 中的函数
   useEffect(() => {
+    // 如果应用打开且内容未加载，则将内容加载状态设置为 true
     if (isAppOpen && !contentLoaded) {
       setContentLoaded(true);
     }
@@ -26,9 +35,8 @@ function Apps({ isAppOpen, toggleApp, bounds, input }) {
   return (
     <>
       <div
-        className={`${
-          isAppOpen ? "" : "hidden"
-        } z-30 w-full h-screen pointer-events-none absolute`}
+        className={`${isAppOpen ? "" : "hidden"
+          } z-30 w-full h-screen pointer-events-none absolute`}
       >
         <Draggable handle=".title-bar" bounds={bounds}>
           {input === "emoji" ? (

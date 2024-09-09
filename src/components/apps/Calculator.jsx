@@ -54,16 +54,29 @@ const Calculator = ({ isAppOpen, toggleCalculator }) => {
     }, 3000);
   };
 
-  const handleNoClick = () => {
-    setShowResult("BRUH 💀");
-    setTimeout(() => {
-      setSubmit(false);
-      setShowResult(" Am I Right?");
-      setDisplay("");
-    }, 3000);
-  };
+/**
+ * 处理当用户没有点击时的行为
+ * 
+ * 此函数用于在用户没有进行预期点击操作时，触发一系列状态更新以提供反馈。
+ * 首先显示一个表示失望的结果（"BRUH 💀"），然后在3秒后，重置提交状态，更新显示结果
+ * 询问用户是否正确，并清空当前显示内容。
+ */
+const handleNoClick = () => {
+  // 设置显示结果为表示失望的表情
+  setShowResult("BRUH 💀");
+  // 3秒后执行一系列状态更新
+  setTimeout(() => {
+    // 重置提交状态
+    setSubmit(false);
+    // 更新显示结果为询问用户是否正确的提示
+    setShowResult(" Am I Right?");
+    // 清空当前显示内容
+    setDisplay("");
+  }, 3000);
+};
 
   const screenWidth = window.innerWidth;
+    // 获取浏览器的屏幕高度
   const screenHeight = window.innerHeight;
   const bounds = {
     left: 0,

@@ -4,6 +4,12 @@ import { generateInitials } from "../user/UserProfile";
 import { useParams } from "react-router-dom";
 import RightClick from "../utilities/RightClick";
 
+/**
+ * Represents the browser's title bar, including functionality to minimize and close the browser.
+ * @param {Object} props - The component props.
+ * @param {Function} props.toggleBrowser - The function to toggle the browser's visibility.
+ * @returns {JSX.Element} The title bar component.
+ */
 const TitleBar = ({ toggleBrowser }) => (
   <div className="title-bar">
     <div className="text-white h-9 w-full flex justify-end select-none">
@@ -29,6 +35,12 @@ const TitleBar = ({ toggleBrowser }) => (
   </div>
 );
 
+/**
+ * Represents the browser's address bar, including search functionality and user avatar.
+ * @param {Object} props - The component props.
+ * @param {string} props.name - The name of the user for the avatar initials.
+ * @returns {JSX.Element} The address bar component.
+ */
 const AddressBar = ({ name }) => (
   <div className="flex bg-neutral-800 w-full h-10 border-neutral-700 border-b-[1.5px] mt-1">
     <div className="flex py-1 w-28 justify-around">
@@ -54,6 +66,10 @@ const AddressBar = ({ name }) => (
   </div>
 );
 
+/**
+ * Represents the browser's tab bar, with options to close and add tabs.
+ * @returns {JSX.Element} The tab bar component.
+ */
 const TabBar = () => (
   <div className="absolute bg-neutral-800 top-[6.5px] h-[2em] left-[6px] w-60 rounded-t-lg flex">
     <div className="flex justify-between items-center w-full">
@@ -68,6 +84,14 @@ const TabBar = () => (
   </div>
 );
 
+/**
+ * The main browser component, incorporating the title bar, address bar, and tab bar.
+ * @param {Object} props - The component props.
+ * @param {boolean} props.isAppOpen - Indicates if the browser is currently open.
+ * @param {Function} props.toggleBrowser - The function to toggle the browser's visibility.
+ * @param {Object} props.bounds - The bounds for dragging the browser window.
+ * @returns {JSX.Element} The browser component.
+ */
 function Browser({ isAppOpen, toggleBrowser, bounds }) {
   const explorerRef = useRef(null);
   const homeUrl = "https://www.google.com/webhp?igu=1";
