@@ -11,14 +11,14 @@ function StartMenu({
   setActionType,
 }) {
   // const name = localStorage.getItem('name');
+  // 从URL参数中提取'name'参数的值
   const { name } = useParams();
   return (
     <>
       <section
         id="w11-start-section"
-        className={`z-50 bg-neutral-800 ${
-          isStartOpen ? "bottom-16" : "bottom-[-800px]"
-        }`}
+        className={`z-50 bg-neutral-800 ${isStartOpen ? "bottom-16" : "bottom-[-800px]"
+          }`}
       >
         <div className="input-div-start">
           <input

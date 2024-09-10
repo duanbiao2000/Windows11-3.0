@@ -44,7 +44,7 @@ function Main() {
       vscode: false,
       recycle: false,
       app: false,
-      // !判断当前窗口是否不是windows数组中的窗口
+      // !通过动态键名来更新 `windows` 状态对象中的特定属性
       [window]: !windows[window],
     });
 

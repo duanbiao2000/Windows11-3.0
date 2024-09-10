@@ -13,6 +13,14 @@ function Lockscreen() {
   }, []);
 
   // Callback for mobile detection
+   /**
+   * 判断设备是否为移动设备的回调函数
+   * 
+   * 该回调函数用于处理移动设备检测的结果，并根据检测结果设置应用的状态。
+   * 它使用useCallback钩子来保持函数引用的稳定，避免不必要的重新渲染。
+   * 
+   * @param {boolean} mobile - 表示设备是否为移动设备的布尔值。如果是移动设备则为true，否则为false。
+   */
   const handleMobileDetection = useCallback((mobile) => {
     setIsMobile(mobile);
   }, []);

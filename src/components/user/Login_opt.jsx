@@ -1,45 +1,65 @@
-import React, { useState } from "react";
+import React, { useReducer, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { UserProfile } from "../user/UserProfile";
+import { UserProfile } from "./UserProfile";
+
+const initialState = {
+  name: "",
+  password: "",
+  error: "",
+  loading: false,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_NAME":
+      return { ...state, name: action.payload };
+    case "SET_PASSWORD":
+      return { ...state, password: action.payload };
+    case "SET_ERROR":
+      return { ...state, error: action.payload };
+    case "SET_LOADING":
+      return { ...state, loading: action.payload };
+    default:
+      throw new Error();
+  }
+}
 
 function Login({ toggleLogin }) {
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
   const navigate = useNavigate();
-  localStorage.setItem("name", name);
+
+  useEffect(() => {
+    localStorage.setItem("name", state.name);
+  }, [state.name]);
 
   async function login(e) {
     e.preventDefault();
     try {
-      setLoading(true);
-      // Simulating a delay for demonstration purposes
-      setTimeout(() => {
-        // 根据提供的名称进行页面导航
-        navigate(`/${name}`);
-        setLoading(false);
-      }, 3000);
+      dispatch({ type: "SET_LOADING", payload: true });
+      // 模拟登录请求
+      await new Promise((resolve) => setTimeout(resolve, 3000));
+      navigate(`/${state.name}`);
     } catch (err) {
       console.error(err);
-      setError("Failed to log in. Please try again later.");
+      dispatch({ type: "SET_ERROR", payload: "Failed to log in. Please try again later." });
       setTimeout(() => {
-        setError("");
+        dispatch({ type: "SET_ERROR", payload: "" });
       }, 2000);
-      setLoading(false);
+    } finally {
+      dispatch({ type: "SET_LOADING", payload: false });
     }
   }
 
   return (
     <>
-      {loading && (
+      {state.loading && (
         <div className="fixed inset-0 flex items-center justify-center z-50 top-36">
           <div className="inline-block animate-spin rounded-full border-4 border-solid border-current border-e-transparent h-8 w-8">
             <span className="sr-only">Loading...</span>
           </div>
         </div>
       )}
-      {!loading && error && (
+      {!state.loading && state.error && (
         <div
           role="alert"
           className="absolute top-0 left-0 w-full bg-red-500 text-white text-center py-2"
@@ -58,25 +78,25 @@ function Login({ toggleLogin }) {
               d="M6 18L18 6M6 6l12 12"
             />
           </svg>
-          <div>{error}</div>
+          <div>{state.error}</div>
         </div>
       )}
       <form onSubmit={login}>
         <div className="relative left-0 top-72 h-screen w-full flex flex-col items-center z-10">
           <div className="aspect-square w-32 h-36">
-            <UserProfile name={name} />
+            <UserProfile name={state.name} />
           </div>
           <input
             className="my-5 text-3xl text-white bg-transparent text-center outline-none"
             type="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={state.name}
+            onChange={(e) => dispatch({ type: "SET_NAME", payload: e.target.value })}
             placeholder="Enter your name"
             style={{ caretColor: "transparent" }}
             required
           />
 
-          {!loading && (
+          {!state.loading && (
             <>
               <input
                 type="password"
@@ -84,8 +104,8 @@ function Login({ toggleLogin }) {
                 name="password"
                 placeholder="Password"
                 className="input bg-opacity-30 w-full max-w-xs focus:outline-none border-[0.5px] border-b-white mt-4 placeholder-white opacity-100::placeholder"
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
+                onChange={(e) => dispatch({ type: "SET_PASSWORD", payload: e.target.value })}
+                value={state.password}
                 required
                 autoComplete="current-password"
               />
